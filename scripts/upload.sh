@@ -22,14 +22,11 @@ echo "============================"
 echo "Uploading the Build..."
 echo "============================"
 
-#Get Version info stored in variables.h
-TW_MAIN_VERSION=$(sed -n -e 's/^.*#define TW_MAIN_VERSION_STR //p' bootable/recovery/variables.h | cut -d'"' -f2)
-
 # Change to the Output Directory
 cd out/target/product/${DEVICE}
 
-#Rename build
-mv -v $OUTPUT twrp-${TW_MAIN_VERSION}-${TW_DEVICE_VERSION}-${DEVICE}.img
+# Set FILENAME var
+FILENAME=$(echo $OUTPUT)
 
 # Upload to oshi.at
 if [ -z "$TIMEOUT" ];then
@@ -39,17 +36,23 @@ fi
 # Upload to WeTransfer
 # NOTE: the current Docker Image, "registry.gitlab.com/sushrut1101/docker:latest", includes the 'transfer' binary by Default
 transfer wet $FILENAME > link.txt || { echo "ERROR: Failed to Upload the Build!" && exit 1; }
+transfer wet $ADDON > link1.txt || { echo "ERROR: Failed to Upload the Addon!" && exit 1; }
 
 # Mirror to oshi.at
-curl -T $FILENAME https://oshi.at/${FILENAME} > mirror.txt || { echo "WARNING: Failed to Mirror the Build!"; }
+curl -T $FILENAME https://oshi.at/${FILENAME}/${OUTPUT} > mirror.txt || { echo "WARNING: Failed to Mirror the Build!"; }
+curl -T $ADDON https://oshi.at/${ADDON}/${OUTPUT} > mirror1.txt || { echo "WARNING: Failed to Mirror the Build!"; }
 
 DL_LINK=$(cat link.txt | grep Download | cut -d\  -f3)
 MIRROR_LINK=$(cat mirror.txt | grep Download | cut -d\  -f1)
+DL_LINK1=$(cat link1.txt | grep Download | cut -d\  -f3)
+MIRROR_LINK1=$(cat mirror1.txt | grep Download | cut -d\  -f1)
 
 # Show the Download Link
 echo "=============================================="
 echo "Download Link: ${DL_LINK}" || { echo "ERROR: Failed to Upload the Build!"; }
 echo "Mirror: ${MIRROR_LINK}" || { echo "WARNING: Failed to Mirror the Build!"; }
+echo "Download Link: ${DL_LINK1}" || { echo "ERROR: Failed to Upload the Addon!"; }
+echo "Mirror: ${MIRROR_LINK1}" || { echo "WARNING: Failed to Mirror the Addon!"; }
 echo "=============================================="
 
 DATE_L=$(date +%d\ %B\ %Y)
@@ -58,13 +61,14 @@ DATE_S=$(date +"%T")
 # Send the Message on Telegram
 echo -e \
 "
-🛠️ CI|TWRP Recovery
+🛠️ CI|SHRP Recovery
 
 Build Completed Successfully!
 
 📱 Device: "${DEVICE}"
-🖥 Build System: "${TWRP_BRANCH}"
+🖥 Build System: "${SHRP_BRANCH}"
 ⬇️ Download Link: <a href=\"${DL_LINK}\">Here</a>
+⬇️ Download Addon Link: <a href=\"${DL_LINK1}\">Here</a>
 📅 Date: "$(date +%d\ %B\ %Y)"
 ⏱ Time: "$(date +%T)"
 " > tg.html

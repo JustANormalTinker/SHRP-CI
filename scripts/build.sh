@@ -25,12 +25,12 @@ fi
 
 echo -e \
 "
-🛠️ CI|TWRP recovery
+🛠️ CI|SHRP recovery
 
 ✔️ The Build has been Triggered!
 
 📱 Device: "${DEVICE}"
-🖥 Build System: "${TWRP_BRANCH}"
+🖥 Build System: "${SHRP_BRANCH}"
 🌲 Logs: <a href=\"https://cirrus-ci.com/build/${CIRRUS_BUILD_ID}\">Here</a>
 " > tg.html
 
@@ -49,7 +49,7 @@ export ALLOW_MISSING_DEPENDENCIES=true
 source build/envsetup.sh
 
 # lunch the target
-if [ "$TWRP_BRANCH" = "twrp-12.1" ]; then
+if [ "$SHRP_BRANCH" = "shrp-12.1" ]; then
     lunch twrp_${DEVICE}-eng || { echo "ERROR: Failed to lunch the target!" && exit 1; }
 else
     lunch omni_${DEVICE}-eng || { echo "ERROR: Failed to lunch the target!" && exit 1; }
@@ -57,11 +57,11 @@ fi
 
 # Build the Code
 if [ -z "$J_VAL" ]; then
-    mka -j$(nproc --all) $TARGET || { echo "ERROR: Failed to Build TWRP!" && exit 1; }
+    mka -j$(nproc --all) $TARGET || { echo "ERROR: Failed to Build SHRP!" && exit 1; }
 elif [ "$J_VAL"="0" ]; then
-    mka $TARGET || { echo "ERROR: Failed to Build TWRP!" && exit 1; }
+    mka $TARGET || { echo "ERROR: Failed to Build SHRP!" && exit 1; }
 else
-    mka -j${J_VAL} $TARGET || { echo "ERROR: Failed to Build TWRP!" && exit 1; }
+    mka -j${J_VAL} $TARGET || { echo "ERROR: Failed to Build SHRP!" && exit 1; }
 fi
 
 # Exit
