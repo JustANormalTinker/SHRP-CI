@@ -2,11 +2,11 @@
 
 # Device
 export SHRP_MANIFEST="https://github.com/SHRP/manifest.git"
-export SHRP_BRANCH="shrp-12.1"
-export DT_LINK="https://github.com/faoliveira78/android_device_oneplus_cheeseburger_dumpling.git -b SHRP-A12.1"
+export SHRP_BRANCH="omni-9.0"
+export DT_LINK="https://github.com/SHRP-Devices/device_xiaomi_whyred -b omni-9.0"
 
-export DEVICE="cheeseburger_dumpling"
-export OEM="oneplus"
+export DEVICE="whyred"
+export OEM="xiaomi"
 #export PLATFORM="msm8998"
 export TARGET="recoveryimage"
 
@@ -26,9 +26,7 @@ mkdir $HOME/work
 fi
 
 export SYNC_PATH="$HOME/work" # Full (absolute) path.
-export USE_CCACHE=1
-export CCACHE_SIZE="50G"
-export CCACHE_DIR="$HOME/work/.ccache"
+
 export J_VAL=16
 
 if [ ! -z "$PLATFORM" ]; then
