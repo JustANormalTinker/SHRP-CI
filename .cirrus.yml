@@ -21,10 +21,10 @@ task:
       - bash -c "$(curl -sL https://raw.githubusercontent.com/Recoveries-CI/SHRP-CI/main/scripts/checks.sh)"
 
   Sync_script:
-      - bash -c "$(curl -sL https://raw.githubusercontent.com/Recoveries-CI/SHRP-CI/main/scripts/sync.sh)"
+      - bash -c "$(curl -sL https://raw.githubusercontent.com/JustANormalTinker/SHRP-CI/main/scripts/sync.sh)"
 
   Build_script:
-      - bash -c "$(curl -sL https://raw.githubusercontent.com/Recoveries-CI/SHRP-CI/main/scripts/build.sh)"
+      - bash -c "$(curl -sL https://raw.githubusercontent.com/JustANormalTinker/SHRP-CI/main/scripts/build.sh)"
 
   Upload_script:
       - export TIMEOUT=43200 # Link timeout (in minutes)
