@@ -16,7 +16,7 @@ telegram_message() {
 
 # Clone the Sync Repo
 cd $SYNC_PATH
-repo init https://github.com/SHRP/manifest.git -b $SHRP_BRANCH --depth=1
+repo init https://github.com/SHRP/manifest.git -b 3_11.0 --depth=1
 repo sync
 
 # Clone Trees
