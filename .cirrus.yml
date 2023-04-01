@@ -14,7 +14,7 @@ task:
   timeout_in: 120m
   container:
       image: ghcr.io/faoliveira78/docker:latest
-      cpu: 2
+      cpu: 8
       memory: 8G
 
   Checks_script:
